@@ -11,8 +11,10 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:4200'],
-  credentials: true,
+  origin: function (origin, callback) {
+    callback(null, true); // უშვებს ნებისმიერ დომენს
+  },
+  credentials: true, // აუცილებელია ქუქიების მიღება-გაგზავნისთვის
 }));
 
 app.use(express.json());
