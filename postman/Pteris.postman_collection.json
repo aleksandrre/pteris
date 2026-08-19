@@ -1,0 +1,348 @@
+{
+  "info": {
+    "_postman_id": "9b2c4a9f-4d2c-4e31-b1d8-6f4c92b6e9f2",
+    "name": "Pteris API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Admin (one time)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin12345\"\n}\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "auth", "register" ]
+            },
+            "description": "Creates the only admin user. If admin already exists returns 409."
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"admin12345\"\n}\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "auth", "login" ]
+            },
+            "description": "Login and set httpOnly cookie `jwt`."
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "auth", "logout" ]
+            },
+            "description": "Clears cookie `jwt`."
+          }
+        },
+        {
+          "name": "Update Password (admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"currentPassword\": \"admin12345\",\n  \"newPassword\": \"adminNEW12345\"\n}\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/update-password",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "auth", "update-password" ]
+            },
+            "description": "Requires logged-in admin cookie."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Services",
+      "item": [
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/services",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "services" ]
+            }
+          }
+        },
+        {
+          "name": "Get By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/services/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "services", ":id" ]
+            }
+          }
+        },
+        {
+          "name": "Create (admin, multipart)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Service name", "type": "text" },
+                { "key": "shortDescription", "value": "Short description", "type": "text" },
+                { "key": "longDescription", "value": "Long description", "type": "text" },
+                { "key": "features", "value": "[\"feature 1\",\"feature 2\"]", "type": "text" },
+                { "key": "icon", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/services",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "services" ]
+            },
+            "description": "Requires logged-in admin cookie. `features` must be a JSON string array."
+          }
+        },
+        {
+          "name": "Update (admin, multipart)",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Updated name", "type": "text" },
+                { "key": "shortDescription", "value": "Updated short", "type": "text" },
+                { "key": "longDescription", "value": "Updated long", "type": "text" },
+                { "key": "features", "value": "[\"feature A\",\"feature B\"]", "type": "text" },
+                { "key": "icon", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/services/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "services", ":id" ]
+            },
+            "description": "Requires logged-in admin cookie."
+          }
+        },
+        {
+          "name": "Delete (admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/services/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "services", ":id" ]
+            },
+            "description": "Requires logged-in admin cookie."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Results",
+      "item": [
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/results",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "results" ]
+            }
+          }
+        },
+        {
+          "name": "Get By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/results/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "results", ":id" ]
+            }
+          }
+        },
+        {
+          "name": "Create (admin, multipart)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "category", "value": "Category", "type": "text" },
+                { "key": "client", "value": "Client", "type": "text" },
+                { "key": "location", "value": "Location", "type": "text" },
+                { "key": "year", "value": "2026", "type": "text" },
+                { "key": "plantsCount", "value": "120", "type": "text" },
+                { "key": "area", "value": "200m2", "type": "text" },
+                { "key": "duration", "value": "2 weeks", "type": "text" },
+                { "key": "beforeImage", "type": "file", "src": "" },
+                { "key": "afterImage", "type": "file", "src": "" },
+                { "key": "images", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/results",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "results" ]
+            },
+            "description": "Requires logged-in admin cookie. For multiple `images`, add multiple form-data keys named `images`."
+          }
+        },
+        {
+          "name": "Update (admin, multipart)",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "category", "value": "Updated Category", "type": "text" },
+                { "key": "client", "value": "Updated Client", "type": "text" },
+                { "key": "location", "value": "Updated Location", "type": "text" },
+                { "key": "year", "value": "2026", "type": "text" },
+                { "key": "plantsCount", "value": "200", "type": "text" },
+                { "key": "area", "value": "300m2", "type": "text" },
+                { "key": "duration", "value": "3 weeks", "type": "text" },
+                { "key": "beforeImage", "type": "file", "src": "" },
+                { "key": "afterImage", "type": "file", "src": "" },
+                { "key": "images", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/results/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "results", ":id" ]
+            },
+            "description": "Requires logged-in admin cookie. Sending new `images` replaces old images array."
+          }
+        },
+        {
+          "name": "Delete (admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/results/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "results", ":id" ]
+            },
+            "description": "Requires logged-in admin cookie."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Partners",
+      "item": [
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/partners",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "partners" ]
+            }
+          }
+        },
+        {
+          "name": "Get By Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/partners/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "partners", ":id" ]
+            }
+          }
+        },
+        {
+          "name": "Create (admin, multipart)",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Partner name", "type": "text" },
+                { "key": "category", "value": "Category", "type": "text" },
+                { "key": "description", "value": "Description", "type": "text" },
+                { "key": "projectCount", "value": "10", "type": "text" },
+                { "key": "partnershipYear", "value": "2024", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/partners",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "partners" ]
+            },
+            "description": "Requires logged-in admin cookie."
+          }
+        },
+        {
+          "name": "Update (admin, multipart)",
+          "request": {
+            "method": "PUT",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Updated Partner", "type": "text" },
+                { "key": "category", "value": "Updated Category", "type": "text" },
+                { "key": "description", "value": "Updated description", "type": "text" },
+                { "key": "projectCount", "value": "12", "type": "text" },
+                { "key": "partnershipYear", "value": "2025", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/partners/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "partners", ":id" ]
+            },
+            "description": "Requires logged-in admin cookie."
+          }
+        },
+        {
+          "name": "Delete (admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/partners/:id",
+              "host": [ "{{baseUrl}}" ],
+              "path": [ "api", "partners", ":id" ]
+            },
+            "description": "Requires logged-in admin cookie."
+          }
+        }
+      ]
+    }
+  ]
+}
+

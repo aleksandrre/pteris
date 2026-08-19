@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "aws:whoami": "node scripts/awsWhoami.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1010.0",
+    "@aws-sdk/client-sts": "^3.1010.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
